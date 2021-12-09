@@ -1,14 +1,15 @@
 # Bank-System
 
 1. Serviços
-  - [ ] Estrutura base e arquitetura
-  - [ ] Tratamento de erros
+  - [x] Estrutura base e arquitetura
+  - [x] Tratamento de erros
   - [ ] Testes
-  - [ ] Configuração do banco
+  - [x] Configuração do banco
   - [ ]
 2. Gateway
-  - [ ] Transporte
-  - [ ] Tratamento de erros
+  - [x] Estrutura base e arquitetura
+  - [x] Transporte
+  - [x] Tratamento de erros
   - [ ] Segurança
   - [ ] Autenticação
   - [ ] Testes
