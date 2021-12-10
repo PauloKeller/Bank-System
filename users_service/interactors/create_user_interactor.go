@@ -4,18 +4,30 @@ import (
 	"users_service/entities"
 	"users_service/models"
 	"users_service/repositories"
+	"users_service/utils"
 )
 
 type CreateUserInteractorInterface interface {
-	Create(model models.CreateUserModel) *models.UsersServiceError
+	Create(model *models.CreateUserModel) *utils.Error
 }
 
 type CreateUserInteractor struct {
 	Repository repositories.UserRepositoryInterface
 }
 
-func (interactor *CreateUserInteractor) Create(model *models.CreateUserModel) *models.UsersServiceError {
-	var serviceError *models.UsersServiceError
+func (interactor *CreateUserInteractor) Create(model *models.CreateUserModel) *utils.Error {
+	var serviceError *utils.Error
+
+	isValid, msg := model.IsValid()
+
+	if !isValid {
+		serviceError = &utils.Error{
+			Code:    utils.InvalidDataErrorCode,
+			Err:     nil,
+			Message: msg,
+		}
+		return serviceError
+	}
 
 	entity := &entities.UserEntity{
 		FirstName: model.FirstName,
@@ -28,8 +40,8 @@ func (interactor *CreateUserInteractor) Create(model *models.CreateUserModel) *m
 	_, err := interactor.Repository.Insert(entity)
 
 	if err != nil {
-		serviceError = &models.UsersServiceError{
-			Code:    1,
+		serviceError = &utils.Error{
+			Code:    utils.UnknownErrorCode,
 			Err:     err,
 			Message: "Cannot insert into database.",
 		}

@@ -15,8 +15,9 @@ import (
 )
 
 type Handler struct {
-	CreateUserInteractor interactors.CreateUserInteractor
-	GetAllUserInteractor interactors.GetAllUserInteractor
+	CreateUserInteractor  interactors.CreateUserInteractorInterface
+	GetAllUserInteractor  interactors.GetAllUserInteractorInterface
+	GetUserByIDInteractor interactors.GetUserByIDInteractorInterface
 }
 
 type HandlerInterface interface {
@@ -37,7 +38,7 @@ func (handler *Handler) Create(ctx context.Context, in *core_grpc_api.CreateUser
 	err := handler.CreateUserInteractor.Create(model)
 	if err != nil {
 		log.Println(err.Error())
-		grpcError := status.Error(codes.AlreadyExists, err.Error())
+		grpcError := status.Error(codes.Code(err.Code.ConvertToGrpc()), err.Error())
 		return nil, grpcError
 	}
 
@@ -76,5 +77,24 @@ func (handler *Handler) GetAll(in *empty.Empty, stream core_grpc_api.UsersServic
 }
 
 func (handler *Handler) GetById(ctx context.Context, in *core_grpc_api.GetUserById) (*core_grpc_api.User, error) {
-	return nil, nil
+	data, err := handler.GetUserByIDInteractor.GetByID(in.GetId())
+
+	if err != nil {
+		log.Println(err.Error())
+		return nil, err
+	}
+
+	response := &core_grpc_api.User{
+		Id:        data.ID.String(),
+		FirstName: data.FirstName,
+		LastName:  data.LastName,
+		Username:  data.Username,
+		Email:     data.Email,
+		Password:  data.Password,
+		CreatedAt: timestamppb.New(data.CreatedAt),
+		UpdatedAt: timestamppb.New(data.UpdatedAt),
+		DeletedAt: timestamppb.New(data.DeletedAt),
+	}
+
+	return response, nil
 }

@@ -43,10 +43,13 @@ func main() {
 	repositories, err := repositories.NewRepositories(dbData)
 
 	handler := &handler.Handler{
-		CreateUserInteractor: interactors.CreateUserInteractor{
+		CreateUserInteractor: &interactors.CreateUserInteractor{
 			Repository: repositories.User,
 		},
-		GetAllUserInteractor: interactors.GetAllUserInteractor{
+		GetAllUserInteractor: &interactors.GetAllUserInteractor{
+			Repository: repositories.User,
+		},
+		GetUserByIDInteractor: &interactors.GetUserByIDInteractor{
 			Repository: repositories.User,
 		},
 	}

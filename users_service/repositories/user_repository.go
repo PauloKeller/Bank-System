@@ -32,8 +32,16 @@ func (repository *UserRepository) GetAll() ([]entities.UserEntity, error) {
 	return data, nil
 }
 
-func (repository *UserRepository) GetByID(string) (*entities.UserEntity, error) {
-	return nil, nil
+func (repository *UserRepository) GetByID(ID string) (*entities.UserEntity, error) {
+	data := &entities.UserEntity{}
+
+	result := repository.db.Debug().First(&data, "id = ?", ID)
+
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
+	return data, nil
 }
 
 func (repository *UserRepository) Insert(entity *entities.UserEntity) (*entities.UserEntity, error) {
