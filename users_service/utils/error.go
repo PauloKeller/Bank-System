@@ -15,7 +15,7 @@ type Error struct {
 func (e *Error) Error() string {
 	json, err := json.Marshal(e)
 	if err != nil {
-		log.Fatalf("failed to serve: %v", err)
+		log.Fatalf("failed to marshal: %v", err)
 	}
 	return string(json)
 }
