@@ -10,11 +10,17 @@ type GetAllUserInteractorInterface interface {
 }
 
 type GetAllUserInteractor struct {
-	Repository repositories.UserRepositoryInterface
+	repository repositories.UserRepositoryInterface
+}
+
+func NewGetAllUserInteractor(repo repositories.UserRepositoryInterface) *GetAllUserInteractor {
+	return &GetAllUserInteractor{
+		repo,
+	}
 }
 
 func (interactor *GetAllUserInteractor) GetAll() ([]entities.UserEntity, error) {
-	data, err := interactor.Repository.GetAll()
+	data, err := interactor.repository.GetAll()
 
 	if err != nil {
 		return nil, err

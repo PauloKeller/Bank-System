@@ -10,11 +10,17 @@ type GetUserByIDInteractorInterface interface {
 }
 
 type GetUserByIDInteractor struct {
-	Repository repositories.UserRepositoryInterface
+	repository repositories.UserRepositoryInterface
+}
+
+func NewGetUserByIDInteractor(repo repositories.UserRepositoryInterface) *GetUserByIDInteractor {
+	return &GetUserByIDInteractor{
+		repo,
+	}
 }
 
 func (interactor *GetUserByIDInteractor) GetByID(ID string) (*entities.UserEntity, error) {
-	data, err := interactor.Repository.GetByID(ID)
+	data, err := interactor.repository.GetByID(ID)
 
 	if err != nil {
 		return nil, err

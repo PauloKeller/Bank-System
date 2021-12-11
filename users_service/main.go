@@ -45,13 +45,9 @@ func main() {
 	repositories.Automigrate()
 
 	handler := &handler.Handler{
-		CreateUserInteractor: interactors.NewCreateUserInteractor(repositories.User),
-		GetAllUserInteractor: &interactors.GetAllUserInteractor{
-			Repository: repositories.User,
-		},
-		GetUserByIDInteractor: &interactors.GetUserByIDInteractor{
-			Repository: repositories.User,
-		},
+		CreateUserInteractor:  interactors.NewCreateUserInteractor(repositories.User),
+		GetAllUserInteractor:  interactors.NewGetAllUserInteractor(repositories.User),
+		GetUserByIDInteractor: interactors.NewGetUserByIDInteractor(repositories.User),
 	}
 
 	if err != nil {
