@@ -1,4 +1,4 @@
-package models
+package dtos
 
 import (
 	"net/mail"
@@ -7,7 +7,7 @@ import (
 	"users_service/utils"
 )
 
-type CreateUserModel struct {
+type CreateUserDto struct {
 	FirstName string
 	LastName  string
 	Username  string
@@ -15,7 +15,7 @@ type CreateUserModel struct {
 	Password  string
 }
 
-func (model *CreateUserModel) IsValid() (bool, string) {
+func (model *CreateUserDto) IsValid() (bool, string) {
 	if !(len(strings.Trim(model.FirstName, "")) > 0) {
 		return false, utils.InvalidFirstNameMessage.Value()
 	}
@@ -33,7 +33,11 @@ func (model *CreateUserModel) IsValid() (bool, string) {
 		return false, utils.InvalidEmailMessage.Value()
 	}
 
-	if !(len(strings.Trim(model.Password, "")) > 0) || !(len(strings.Trim(model.Password, "")) < 5) {
+	if !(len(strings.Trim(model.Password, "")) > 0) {
+		return false, utils.InvalidPasswordMessage.Value()
+	}
+
+	if len(strings.Trim(model.Password, "")) > 6 {
 		return false, utils.InvalidPasswordMessage.Value()
 	}
 

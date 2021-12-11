@@ -42,10 +42,10 @@ func main() {
 
 	repositories, err := repositories.NewRepositories(dbData)
 
+	repositories.Automigrate()
+
 	handler := &handler.Handler{
-		CreateUserInteractor: &interactors.CreateUserInteractor{
-			Repository: repositories.User,
-		},
+		CreateUserInteractor: interactors.NewCreateUserInteractor(repositories.User),
 		GetAllUserInteractor: &interactors.GetAllUserInteractor{
 			Repository: repositories.User,
 		},

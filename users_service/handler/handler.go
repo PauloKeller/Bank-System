@@ -4,8 +4,8 @@ import (
 	"context"
 	"log"
 
+	"users_service/dtos"
 	"users_service/interactors"
-	"users_service/models"
 	core_grpc_api "users_service/proto"
 
 	"github.com/golang/protobuf/ptypes/empty"
@@ -27,7 +27,7 @@ type HandlerInterface interface {
 }
 
 func (handler *Handler) Create(ctx context.Context, in *core_grpc_api.CreateUserRequest) (*core_grpc_api.CreateUserReply, error) {
-	model := &models.CreateUserModel{
+	model := &dtos.CreateUserDto{
 		FirstName: in.FirstName,
 		LastName:  in.LastName,
 		Username:  in.Username,

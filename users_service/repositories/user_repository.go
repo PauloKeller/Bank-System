@@ -7,7 +7,7 @@ import (
 )
 
 type UserRepositoryInterface interface {
-	Insert(*entities.UserEntity) (*entities.UserEntity, error)
+	Insert(*entities.UserEntity) error
 	GetByID(string) (*entities.UserEntity, error)
 	GetAll() ([]entities.UserEntity, error)
 }
@@ -44,12 +44,12 @@ func (repository *UserRepository) GetByID(ID string) (*entities.UserEntity, erro
 	return data, nil
 }
 
-func (repository *UserRepository) Insert(entity *entities.UserEntity) (*entities.UserEntity, error) {
+func (repository *UserRepository) Insert(entity *entities.UserEntity) error {
 	err := repository.db.Debug().Create(&entity).Error
 
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	return entity, nil
+	return nil
 }

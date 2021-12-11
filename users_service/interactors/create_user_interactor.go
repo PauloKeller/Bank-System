@@ -1,21 +1,27 @@
 package interactors
 
 import (
+	"users_service/dtos"
 	"users_service/entities"
-	"users_service/models"
 	"users_service/repositories"
 	"users_service/utils"
 )
 
 type CreateUserInteractorInterface interface {
-	Create(model *models.CreateUserModel) *utils.Error
+	Create(model *dtos.CreateUserDto) *utils.Error
 }
 
 type CreateUserInteractor struct {
-	Repository repositories.UserRepositoryInterface
+	repository repositories.UserRepositoryInterface
 }
 
-func (interactor *CreateUserInteractor) Create(model *models.CreateUserModel) *utils.Error {
+func NewCreateUserInteractor(repo repositories.UserRepositoryInterface) *CreateUserInteractor {
+	return &CreateUserInteractor{
+		repo,
+	}
+}
+
+func (interactor *CreateUserInteractor) Create(model *dtos.CreateUserDto) *utils.Error {
 	var serviceError *utils.Error
 
 	isValid, msg := model.IsValid()
@@ -37,7 +43,7 @@ func (interactor *CreateUserInteractor) Create(model *models.CreateUserModel) *u
 		Password:  model.Password,
 	}
 
-	_, err := interactor.Repository.Insert(entity)
+	err := interactor.repository.Insert(entity)
 
 	if err != nil {
 		serviceError = &utils.Error{
