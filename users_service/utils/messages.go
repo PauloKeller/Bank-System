@@ -8,6 +8,7 @@ const (
 	InvalidUsernameMessage  Message = "Invalid username."
 	InvalidEmailMessage     Message = "Invalid email."
 	InvalidPasswordMessage  Message = "Invalid password."
+	UnknownMessage          Message = "Unknown"
 )
 
 func (enum Message) Value() string {
@@ -22,7 +23,9 @@ func (enum Message) Value() string {
 		return "Invalid email."
 	case InvalidPasswordMessage:
 		return "Invalid password."
+	case UnknownMessage:
+		return "Unknown"
 	}
 
-	return "Unknown message"
+	return "Unknown"
 }

@@ -2,14 +2,11 @@ package interactors
 
 import (
 	"testing"
+	"users_service/repositories"
 )
 
-func TestFailToGetAll(t *testing.T) {
-	interactor := &GetAllUserInteractor{
-		repository: &MockUserRepository{
-			ShouldFailGetAll: true,
-		},
-	}
+func TestFailToGetAllUser(t *testing.T) {
+	interactor := NewGetAllUserInteractor(&repositories.MockUserRepository{ShouldFailGetAll: true})
 
 	data, err := interactor.GetAll()
 
@@ -22,9 +19,9 @@ func TestFailToGetAll(t *testing.T) {
 	}
 }
 
-func TestGetAll(t *testing.T) {
+func TestGetAllUser(t *testing.T) {
 	interactor := &GetAllUserInteractor{
-		repository: &MockUserRepository{},
+		repository: &repositories.MockUserRepository{},
 	}
 
 	data, err := interactor.GetAll()

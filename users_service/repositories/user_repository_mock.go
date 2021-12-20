@@ -1,4 +1,4 @@
-package interactors
+package repositories
 
 import (
 	"fmt"
@@ -20,8 +20,12 @@ func (m *MockUserRepository) Insert(entity *entities.UserEntity) error {
 	return nil
 }
 
-func (m *MockUserRepository) GetByID(string) (*entities.UserEntity, error) {
-	return nil, nil
+func (m *MockUserRepository) GetByID(id string) (*entities.UserEntity, error) {
+	if len(id) > 0 {
+		return &entities.UserEntity{}, nil
+	}
+
+	return nil, fmt.Errorf("some error")
 }
 
 func (m *MockUserRepository) GetAll() ([]entities.UserEntity, error) {

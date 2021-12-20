@@ -3,13 +3,11 @@ package interactors
 import (
 	"testing"
 	"users_service/dtos"
+	"users_service/repositories"
 )
 
 func TestFailToCreate(t *testing.T) {
-	interactor := &CreateUserInteractor{
-		repository: &MockUserRepository{},
-	}
-
+	interactor := NewCreateUserInteractor(&repositories.MockUserRepository{})
 	err := interactor.Create(&dtos.CreateUserDto{})
 
 	if err == nil {
@@ -19,7 +17,7 @@ func TestFailToCreate(t *testing.T) {
 
 func TestCreate(t *testing.T) {
 	interactor := &CreateUserInteractor{
-		repository: &MockUserRepository{},
+		repository: &repositories.MockUserRepository{},
 	}
 
 	err := interactor.Create(&dtos.CreateUserDto{
@@ -37,7 +35,7 @@ func TestCreate(t *testing.T) {
 
 func TestFailToCreateWhenInsert(t *testing.T) {
 	interactor := &CreateUserInteractor{
-		repository: &MockUserRepository{},
+		repository: &repositories.MockUserRepository{},
 	}
 
 	err := interactor.Create(&dtos.CreateUserDto{
