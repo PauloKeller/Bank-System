@@ -1,23 +1,15 @@
 package interactors
 
 import (
-	"os"
 	"testing"
 	"users_service/dtos"
 )
 
-var interactor CreateUserInteractorInterface
-var err error
-
-func TestMain(m *testing.M) {
-	interactor = &CreateUserInteractor{
+func TestFailToCreate(t *testing.T) {
+	interactor := &CreateUserInteractor{
 		repository: &MockUserRepository{},
 	}
 
-	os.Exit(m.Run())
-}
-
-func TestFailToCreate(t *testing.T) {
 	err := interactor.Create(&dtos.CreateUserDto{})
 
 	if err == nil {
@@ -26,6 +18,10 @@ func TestFailToCreate(t *testing.T) {
 }
 
 func TestCreate(t *testing.T) {
+	interactor := &CreateUserInteractor{
+		repository: &MockUserRepository{},
+	}
+
 	err := interactor.Create(&dtos.CreateUserDto{
 		FirstName: "Paulo",
 		LastName:  "Keller",
@@ -40,6 +36,10 @@ func TestCreate(t *testing.T) {
 }
 
 func TestFailToCreateWhenInsert(t *testing.T) {
+	interactor := &CreateUserInteractor{
+		repository: &MockUserRepository{},
+	}
+
 	err := interactor.Create(&dtos.CreateUserDto{
 		FirstName: "fail",
 		LastName:  "Keller",

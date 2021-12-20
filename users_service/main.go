@@ -42,16 +42,16 @@ func main() {
 
 	repositories, err := repositories.NewRepositories(dbData)
 
+	if err != nil {
+		panic(err)
+	}
+
 	repositories.Automigrate()
 
 	handler := &handler.Handler{
 		CreateUserInteractor:  interactors.NewCreateUserInteractor(repositories.User),
 		GetAllUserInteractor:  interactors.NewGetAllUserInteractor(repositories.User),
 		GetUserByIDInteractor: interactors.NewGetUserByIDInteractor(repositories.User),
-	}
-
-	if err != nil {
-		panic(err)
 	}
 
 	grpcServer := grpc.NewServer()
