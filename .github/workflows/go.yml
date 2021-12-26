@@ -20,6 +20,9 @@ jobs:
         
     - name: Install protoc
       run: go install google.golang.org/protobuf/cmd/protoc-gen-go@latest && go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+      
+    - name: Export PATH
+      run: export PATH="$PATH:$(go env GOPATH)/bin"
         
     - name: Generate GPRC files
       working-directory: ./hub_service
