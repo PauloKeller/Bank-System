@@ -25,7 +25,7 @@ jobs:
       run: export PATH="$PATH:$(go env GOPATH)/bin"
         
     - name: Generate GPRC files
-      working-directory: ./hub_service
+      working-directory: ./hub_service/proto
       run: protoc --go_out=. --go-grpc_out=require_unimplemented_servers=false:. *.proto
         
     - name: Build
