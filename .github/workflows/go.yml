@@ -22,7 +22,7 @@ jobs:
       run: cd hub_service && ls
   
     - name: Build
-      run: go mod download
+      run: go mod download all
       
     - name: Test
       run: go test ./... -coverprofile cover.out
